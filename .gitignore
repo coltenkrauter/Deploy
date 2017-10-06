@@ -1,0 +1,4 @@
+*.db
+deploy-venv
+logs/
+__pycache__
