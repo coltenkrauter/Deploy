@@ -35,8 +35,10 @@ def github_payload():
                     return jsonify({'msg': 'nothing to commit'})
 
         else:
-            return jsonify({'msg': 'invalid hash'})
+            logger.log()
+            response, status = responder.response(code=401, message='Unable to verify secret key.')
+            return jsonify(response), status
     except Exception as error:
         logger.log()
-        response, status = responder.response(code=401, message='Unable to verify secret key.')
+        response, status = responder.response(code=500, message='Internal error.')
         return jsonify(response), status
