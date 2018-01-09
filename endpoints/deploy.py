@@ -16,6 +16,7 @@ def verify_hmac_hash(data, signature):
 def github_payload():
     try:
         signature = request.headers.get('X-Hub-Signature')
+        logger.log(signature)
         data = request.data
         if verify_hmac_hash(data, signature):
             if request.headers.get('X-GitHub-Event') == "ping":
