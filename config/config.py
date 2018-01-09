@@ -1,1 +1,0 @@
-SLACK_WEBHOOK_DEPLOY = 'https://hooks.slack.com/services/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'
