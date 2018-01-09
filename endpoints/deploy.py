@@ -35,10 +35,10 @@ def github_payload():
                         cmd_output = subprocess.check_output(
                             ['git', 'pull', 'origin', 'master'],)
                         
-                        logger.deploy(cmd_output)
+                        logger.log(cmd_output)
                         return jsonify({'msg': str(cmd_output)})
                     except subprocess.CalledProcessError as error:
-                        logger.deploy(error.output)
+                        logger.log(error.output)
                         return jsonify({'msg': str(error.output)})
                 else:
                     return jsonify({'msg': 'nothing to commit'})
@@ -47,6 +47,6 @@ def github_payload():
             return jsonify({'msg': 'invalid hash'})
 
     except Exception as error:
-        logger.deploy(str(jsonify(error)))
+        logger.log(str(jsonify(error)))
         response, status = responder.response(code=401, message='Unable to verify secret key.')
         return jsonify(response), status
