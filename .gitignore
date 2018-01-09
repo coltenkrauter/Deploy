@@ -1,4 +1,4 @@
 *.db
 deploy-venv
-logs/
+config
 __pycache__
