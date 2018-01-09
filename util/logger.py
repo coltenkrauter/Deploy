@@ -3,7 +3,8 @@
 
 import requests
 import traceback
-import config
+from Deploy.config import config
+
 
 def log(message = None):
     data = { 'text' : '```'+traceback.format_exc()+'```' }
