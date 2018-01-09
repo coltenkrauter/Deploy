@@ -47,4 +47,4 @@ def github_payload():
             return jsonify({'msg': 'invalid hash'})
     except Exception as error:
         logger.deploy(str(error))
-        return responder.response(code=401, message='Unable to verify secret key.')
+        return jsonify(responder.response(code=401, message='Unable to verify secret key.'))
