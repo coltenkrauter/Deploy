@@ -20,7 +20,7 @@ def verify_hmac_hash(data, signature):
 
 # export GITHUB_SECRET=secret
 
-@app.route("/payload", methods=['POST'])
+@app.route("/payload/", methods=['POST'])
 def github_payload():
     signature = request.headers.get('X-Hub-Signature')
     data = request.data
