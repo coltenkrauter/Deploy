@@ -1,6 +1,7 @@
 from Deploy import app, jsonify, request
 from Deploy.util import logger, sanitizer, responder
 from Deploy.logic import deploy as logic
+from Deploy.config import config
 
 import hmac
 import hashlib
@@ -8,7 +9,7 @@ import subprocess
 import os
 
 def verify_hmac_hash(data, signature):
-    github_secret = os.environ.get('GITHUB_SECRET', None)
+    github_secret = config.GITHUB_SECRET
     mac = hmac.new(github_secret, msg=data, digestmod=hashlib.sha1)
     return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)
         
