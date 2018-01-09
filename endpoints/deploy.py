@@ -33,7 +33,7 @@ def github_payload():
                 try:
                     cmd_output = subprocess.check_output(
                         ['git', 'pull', 'origin', 'master'],)
-                    subject"Code deployed successfully"
+                    
                     logger.deploy(, cmd_output)
                     return jsonify({'msg': str(cmd_output)})
                 except subprocess.CalledProcessError as error:
