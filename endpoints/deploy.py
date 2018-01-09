@@ -2,12 +2,6 @@ from Deploy import app, jsonify, request
 from Deploy.util import logger, sanitizer, responder
 from Deploy.logic import deploy as logic
 
-@app.route('/', methods=['POST'])
-def deploy():
-    return jsonify(logic.deploy(sanitizer.sanitize(request.json), request.args.get('path')))
-
-
-
 import hmac
 import hashlib
 import subprocess
@@ -35,24 +29,15 @@ def github_payload():
                         cmd_output = subprocess.check_output(
                             ['git', 'pull', 'origin', 'master'],)
                         
-                        logger.log(cmd_output)
                         return jsonify({'msg': str(cmd_output)})
                     except subprocess.CalledProcessError as error:
-                        logger.log(error.output)
+        
                         return jsonify({'msg': str(error.output)})
                 else:
                     return jsonify({'msg': 'nothing to commit'})
 
         else:
             return jsonify({'msg': 'invalid hash'})
-<<<<<<< HEAD
-
     except Exception as error:
-        logger.log(str(jsonify(error)))
-        response, status = responder.response(code=401, message='Unable to verify secret key.')
-        return jsonify(response), status
-=======
-    except Exception as error:
-        logger.deploy(str(error))
+        
         return jsonify(responder.response(code=401, message='Unable to verify secret key.'))
->>>>>>> parent of 8c4bd0f... Update response
