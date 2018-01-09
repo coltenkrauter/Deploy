@@ -14,7 +14,8 @@ import subprocess
 import os
 
 def verify_hmac_hash(data, signature):
-    mac = hmac.new(os.environ['GITHUB_SECRET'], msg=data, digestmod=hashlib.sha1)
+    github_secret = bytes(os.environ['GITHUB_SECRET'], 'UTF-8')
+    mac = hmac.new(github_secret, msg=data, digestmod=hashlib.sha1)
     return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)
         
 # export GITHUB_SECRET=secret
@@ -46,6 +47,6 @@ def github_payload():
             return jsonify({'msg': 'invalid hash'})
 
     except Exception as error:
-        logger.deploy(str(error))
+        logger.deploy(str(jsonify(error)))
         response, status = responder.response(code=401, message='Unable to verify secret key.')
         return jsonify(response), status
