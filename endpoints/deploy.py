@@ -34,10 +34,10 @@ def github_payload():
                     cmd_output = subprocess.check_output(
                         ['git', 'pull', 'origin', 'master'],)
                     
-                    logger.deploy(, cmd_output)
+                    logger.deploy(cmd_output)
                     return jsonify({'msg': str(cmd_output)})
                 except subprocess.CalledProcessError as error:
-                    logger.deploy("Code deployment failed", error.output)
+                    logger.deploy(error.output)
                     return jsonify({'msg': str(error.output)})
             else:
                 return jsonify({'msg': 'nothing to commit'})
