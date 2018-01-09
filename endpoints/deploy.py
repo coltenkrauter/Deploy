@@ -45,8 +45,14 @@ def github_payload():
 
         else:
             return jsonify({'msg': 'invalid hash'})
+<<<<<<< HEAD
 
     except Exception as error:
         logger.log(str(jsonify(error)))
         response, status = responder.response(code=401, message='Unable to verify secret key.')
         return jsonify(response), status
+=======
+    except Exception as error:
+        logger.deploy(str(error))
+        return jsonify(responder.response(code=401, message='Unable to verify secret key.'))
+>>>>>>> parent of 8c4bd0f... Update response
