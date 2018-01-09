@@ -8,7 +8,7 @@ import subprocess
 import os
 
 def verify_hmac_hash(data, signature):
-    github_secret = bytes(os.environ.get('GITHUB_SECRET'), 'UTF-8')
+    github_secret = os.environ.get('GITHUB_SECRET', None)
     mac = hmac.new(github_secret, msg=data, digestmod=hashlib.sha1)
     return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)
         
