@@ -8,9 +8,10 @@ import subprocess
 import os
 
 def verify_hmac_hash(data, signature):
-    data_to_sign = data.encode('utf-8')
+    data_to_sign = str(data)
     signature_to_sign = signature.encode('utf-8')
     mac = hmac.new(config.GITHUB_SECRET, data_to_sign, hashlib.sha1)
+    logger.log('sha1=' + mac.hexdigest())
     return hmac.compare_digest('sha1=' + mac.hexdigest(), signature_to_sign)
 
 @app.route("/payload/", methods=['POST'])
@@ -18,7 +19,7 @@ def github_payload():
     try:
         signature = request.headers.get('X-Hub-Signature')
         logger.log(signature)
-        data = str(request.data)
+        data = request.data
         if verify_hmac_hash(data, signature):
             if request.headers.get('X-GitHub-Event') == "ping":
                 return jsonify({'msg': 'Ok'})
