@@ -8,8 +8,8 @@ import subprocess
 import os
 
 def verify_hmac_hash(data, signature):
-    github_secret = bytes(config.GITHUB_SECRET)
-    mac = hmac.new(github_secret, msg=bytes(data), digestmod=hashlib.sha1)
+    github_secret = config.GITHUB_SECRET
+    mac = hmac.new(github_secret.encode('utf-8'), msg=data.encode('utf-8'), digestmod=hashlib.sha1)
     return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)
         
 @app.route("/payload/", methods=['POST'])
