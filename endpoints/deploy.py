@@ -46,4 +46,4 @@ def github_payload():
         else:
             return jsonify({'msg': 'invalid hash'})
     except Exception as error:
-        logger.deploy(error.output)
+        logger.deploy(str(error))
