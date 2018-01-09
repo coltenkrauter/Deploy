@@ -1,12 +1,15 @@
+# Thanks tomdaley92 for the simple slack logging solution with traceback
+# Credit: https://github.com/tomdaley92
+
 import requests
 import traceback
+import config
 
-def log(text=None):
-    if text != None:
-        data = { 'text' : '```'+str(text)+'```'}
-    else:
-        data = { 'text' : '```'+traceback.format_exc()+'```'}
-    r = requests.post('https://hooks.slack.com/services/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', json=data)
-    if r.status_code != 200:
-        # Send error to mod_wsgi log, if THIS fails
-        print('Error: failed to POST error to slack.')
+def log(message = None):
+    data = { 'text' : '```'+traceback.format_exc()+'```' }
+
+    if message:
+        data = { 'text' : '```'+str(message)+'```' }
+        
+    requests.post(config.SLACK_WEBHOOK_DEPLOY, json=data)
+    
