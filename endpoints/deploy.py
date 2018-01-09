@@ -9,7 +9,7 @@ import os
 
 def verify_hmac_hash(data, signature):
     data_to_sign = data.decode('utf-8')
-    logger.log(data_to_sign)
+    logger.log()
 
     signature_to_sign = signature.encode('utf-8')
     mac = hmac.new(config.GITHUB_SECRET, data_to_sign, hashlib.sha1)
