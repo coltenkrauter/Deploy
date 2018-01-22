@@ -1,14 +1,16 @@
-from Deploy.util import logger
-import git 
+from Deploy.util import slack
+import subprocess
 
-def deploy(data, path):
-    logger.deploy('Recieved payload')
-    logger.deploy('Path: ' + path)
-    
-    g = git.cmd.Git("/home4/specica9/public_html/" + path)
-    g.pull()
+def deploy(payload):
+    # Check if there are any commits to pull
+    if payload['commits'][0]['distinct'] == True:
+        try:
+            cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../" + request.args.get('folder')).decode("utf-8") 
+            slack.log(cmd_output)
+            return jsonify({'msg': str(cmd_output)})
+            
+        except subprocess.CalledProcessError as error:
+            return jsonify({'msg': str(error.output)})
 
-    message = "HTTP 200, OK: Success!"
-    logger.deploy(message)
-
-    return message, 200
+    else:
+        return {'msg': 'Nothing to commit'}
