@@ -33,7 +33,7 @@ def github_payload():
         
                         return jsonify({'msg': str(error.output)})
                 else:
-                    return jsonify({'msg': 'nothing to commit'})
+                    return jsonify({'msg': 'Nothing to commit'})
 
         else:
             slack.log()
