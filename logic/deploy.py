@@ -3,7 +3,7 @@ import subprocess
 
 def pull(request):
     payload = request.get_json()
-    
+
     # Check if there are any commits to pull
     if payload['commits'][0]['distinct'] == True:
         try:
@@ -16,3 +16,4 @@ def pull(request):
 
     else:
         return {'msg': 'Nothing to commit'}
+        
