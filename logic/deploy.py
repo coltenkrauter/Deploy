@@ -1,3 +1,11 @@
+'''
+    File name: deploy.py
+    Author: Colten Krauter
+    Date created: 1/21/2018
+    Date last modified: 1/21/2018
+    Python Version: 3.6
+'''
+
 from Deploy.util import slack
 import subprocess
 
@@ -16,4 +24,3 @@ def pull(request):
 
     else:
         return {'msg': 'Nothing to commit'}
-        

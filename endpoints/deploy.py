@@ -1,3 +1,11 @@
+'''
+    File name: deploy.py
+    Author: Colten Krauter
+    Date created: 1/21/2018
+    Date last modified: 1/21/2018
+    Python Version: 3.6
+'''
+
 from Deploy import app, jsonify, request
 from Deploy.util import slack, sanitizer, responder
 from Deploy.config import config
