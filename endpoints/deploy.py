@@ -5,6 +5,7 @@ from Deploy.config import config
 import hmac
 import hashlib
 import subprocess
+import os
 
 def verify_hmac_hash(data, signature):
     github_secret = config.GITHUB_SECRET
@@ -26,6 +27,7 @@ def github_payload():
                 # Check if there are any commits to pull
                 if payload['commits'][0]['distinct'] == True:
                     try:
+                        slack.log(os.getcwd())
                         cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../" + request.args.get('folder'))
                         slack.log(cmd_output)
                         return jsonify({'msg': str(cmd_output)})
