@@ -1,5 +1,5 @@
 from Deploy import app, jsonify, request
-from Deploy.util import logger, sanitizer, responder
+from Deploy.util import slack, sanitizer, responder
 from Deploy.config import config
 
 import hmac
@@ -16,9 +16,8 @@ def verify_hmac_hash(data, signature):
 def github_payload():
     try:
         signature = request.headers.get('X-Hub-Signature')
-        logger.log(signature)
         data = request.data
-        logger.log(type(data))
+
         if verify_hmac_hash(data, signature):
             if request.headers.get('X-GitHub-Event') == "ping":
                 return jsonify({'msg': 'Ok'})
@@ -37,7 +36,7 @@ def github_payload():
                     return jsonify({'msg': 'nothing to commit'})
 
         else:
-            logger.log()
+            slack.log()
             response, status = responder.response(code=401, message='Unable to verify secret key.')
             return jsonify(response), status
     except Exception as error:
