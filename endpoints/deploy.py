@@ -26,7 +26,8 @@ def github_payload():
                 # Check if there are any commits to pull
                 if payload['commits'][0]['distinct'] == True:
                     try:
-                        cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../../")
+
+                        cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../../" + request.args.get('folder'))
                         slack.log(cmd_output)
                         return jsonify({'msg': str(cmd_output)})
                     except subprocess.CalledProcessError as error:
