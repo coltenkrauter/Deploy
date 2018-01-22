@@ -23,4 +23,5 @@ def pull(request):
             return {'msg': str(error.output)}
 
     else:
+        slack.log('Nothing to commit')
         return {'msg': 'Nothing to commit'}
