@@ -13,7 +13,7 @@ def pull(request):
     payload = request.get_json()
 
     # Check if there are any commits to pull
-    if len(payload['commits'][0]) > 0 and payload['commits'][0]['distinct'] == True:
+    if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
         try:
             cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../" + request.args.get('folder')).decode("utf-8") 
             slack.log(cmd_output)
