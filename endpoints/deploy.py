@@ -34,7 +34,6 @@ def github_payload():
                         return jsonify({'msg': str(error.output)})
                 else:
                     return jsonify({'msg': 'Nothing to commit'})
-
         else:
             slack.log()
             response, status = responder.response(code=401, message='Unable to verify secret key.')
