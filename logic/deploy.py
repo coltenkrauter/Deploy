@@ -1,7 +1,7 @@
 from Deploy.util import slack
 import subprocess
 
-def deploy(payload):
+def pull(payload):
     # Check if there are any commits to pull
     if payload['commits'][0]['distinct'] == True:
         try:

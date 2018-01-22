@@ -20,7 +20,7 @@ def github_payload():
                 return jsonify({'msg': 'Ping event successful'})
 
             if request.headers.get('X-GitHub-Event') == "push":
-                return logic.deploy(request.get_json())
+                return logic.pull(request.get_json())
 
         else:
             slack.log()
