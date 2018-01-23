@@ -9,7 +9,7 @@ def to_iso8601(dateInMilliseconds):
     # Convert seconds since the epoch to a Python datetime object
     dateInSeconds = datetime(1970, 1, 1) + timedelta(seconds=dateInSeconds)
     
-    # Convert Python datetime object to seconds since the epoch
+    # Convert Python datetime object to iso8601 format
     dateString = dateInSeconds.strftime('%Y-%m-%dT%H:%M:%S.%fZ').replace("Z", "")[:-3] + "Z"
 
     return dateString
@@ -44,6 +44,20 @@ def to_milliseconds(dateString):
 
     # Cast as int to remove trailing zeros
     return int(dateInMilliseconds)
+
+# Convert milliseconds since the epoch to an ISO8601 formatted timestamp
+def format_date(dateInMilliseconds, format):
+    
+    # Convert to seconds since the epoch
+    dateInSeconds = dateInMilliseconds/1000
+
+    # Convert seconds since the epoch to a Python datetime object
+    dateInSeconds = datetime(1970, 1, 1) + timedelta(seconds=dateInSeconds)
+    
+    # Convert Python datetime object to given format
+    dateString = dateInSeconds.strftime(format)
+
+    return dateString
 
 # Get the current time in milliseconds
 def current_time():

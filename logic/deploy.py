@@ -6,7 +6,7 @@
     Python Version: 3.6
 '''
 
-from Deploy.util import slack, datetime
+from Deploy.util import slack, date_time
 import subprocess
 
 def pull(request):
@@ -31,7 +31,7 @@ def pull(request):
                 email = 'Email: ' + committer['email'] + '\n'
 
         if 'timestamp' in head_commit:
-            timestamp = 'Timestamp: ' + datetime.datetime.strptime(head_commit['timestamp'], "%m/%d/%Y %H:%M %p") + '\n'
+            timestamp = 'Timestamp: ' + date_time.format_date(date_time.to_milliseconds(head_commit['timestamp']), '%m/%d/%Y %H:%M %p') + '\n'
 
     if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'email' in payload['head_commit']['committer']:
         username = 'Committer: '+payload['head_commit']['committer']['username'] + '\n'
