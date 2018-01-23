@@ -7,7 +7,7 @@
 '''
 
 from Deploy import app, jsonify, request
-from Deploy.util import slack, sanitizer, responder
+from Deploy.util import slack, responder
 from Deploy.config import config
 from Deploy.logic import deploy as logic
 import hmac, hashlib
