@@ -6,10 +6,10 @@
     Python Version: 3.6
 '''
 
-from Deploy import app, jsonify, request
-from Deploy.util import slack, responder
-from Deploy.config import config
-from Deploy.logic import deploy as logic
+from PythonGitHubWebhooks import app, jsonify, request
+from PythonGitHubWebhooks.util import slack, responder
+from PythonGitHubWebhooks.config import config
+from PythonGitHubWebhooks.logic import deploy as logic
 import hmac, hashlib
 
 

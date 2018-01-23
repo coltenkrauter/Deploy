@@ -6,7 +6,7 @@
     Python Version: 3.6
 '''
 
-from Deploy.util import slack
+from PythonGitHubWebhooks.util import slack
 import subprocess, pendulum
 
 def pull(request):
