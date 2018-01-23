@@ -1,7 +1,7 @@
 # Python-GitHub-Webhooks
 
 
-Simple Python Flask web API to handle GitHub webhooks containing a valid secret key. I am using it to trigger a serverside _git pull_ in order to streamline my deployment pipeline.
+Simple Python Flask web API to handle GitHub webhooks containing a valid secret key. I am using it to trigger a server side _git pull_ in order to streamline my deployment pipeline.
 
 ## Coming soon
 - Installation
