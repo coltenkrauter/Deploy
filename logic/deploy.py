@@ -13,16 +13,32 @@ def pull(request):
     payload = request.get_json()
 
     username = ''
+    email = ''
+    timestamp = ''
 
-    if not payload['repository'] or not payload['repository']['name']:
+    if 'repository' not in payload or not 'name' not in payload['repository']:
         return {'msg': 'Repository name missing'}
 
-    if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'username' in payload['head_commit']['committer']:
-        username = 'Committed by '+payload['head_commit']['committer']['username']+'\n'
+    if 'head_commit' in payload:
+        
+        head_commit = payload['head_commit']
+
+        if 'committer' in head_commit:
+            committer = payload['head_commit']['committer']
+            if 'username' in committer:
+                username = 'Committer: ' + committer['username']+'\n'
+            if 'email' in committer:
+                email = 'Email: ' + committer['email']+'\n'
+
+        if 'timestamp' in head_commit:
+            timestamp = 'Timestamp: ' + head_commit['timestamp']
+
+    if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'email' in payload['head_commit']['committer']:
+        username = 'Committer: '+payload['head_commit']['committer']['username']+'\n'
     
     repository = payload['repository']['name']
 
-    slack.log(username + 'Repository: '+repository)
+    slack.log(username + email + timestamp + 'Repository: ' + repository)
     
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
