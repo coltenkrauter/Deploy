@@ -16,7 +16,7 @@ def pull(request):
     email = ''
     timestamp = ''
 
-    if 'repository' not in payload or not 'name' not in payload['repository']:
+    if 'repository' not in payload or 'name' not in payload['repository']:
         return {'msg': 'Repository name missing'}
 
     if 'head_commit' in payload:
