@@ -10,8 +10,13 @@ idna==2.6
 itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
+pendulum==1.4.0
+python-dateutil==2.6.1
+pytz==2017.3
+pytzdata==2017.3.1
 requests==2.18.4
 six==1.11.0
 smmap2==2.0.3
+tzlocal==1.5.1
 urllib3==1.22
 Werkzeug==0.12.2
