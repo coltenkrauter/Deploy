@@ -3,7 +3,7 @@
 
 import requests
 import traceback
-from Deploy.config import config
+from PythonGitHubWebhooks.config import config
 
 
 def log(message = None):
