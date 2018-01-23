@@ -6,8 +6,8 @@
     Python Version: 3.6
 '''
 
-from Deploy.util import slack, pendulum
-import subprocess
+from Deploy.util import slack
+import subprocess, pendulum
 
 def pull(request):
     payload = request.get_json()
