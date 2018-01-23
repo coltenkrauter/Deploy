@@ -13,6 +13,7 @@ def pull(request):
     payload = request.get_json()
 
     name = ''
+    username = ''
     email = ''
     timestamp = ''
     url = ''
@@ -26,7 +27,7 @@ def pull(request):
 
     if 'repository' in payload and 'full_name' in payload['repository']:
         repositoryFullName = 'Repository: ' + payload['repository']['full_name'] + '\n'
-
+        
     if 'head_commit' in payload:
         
         head_commit = payload['head_commit']
@@ -35,6 +36,8 @@ def pull(request):
             committer = payload['head_commit']['committer']
             if 'name' in committer:
                 name = 'Committer: ' + committer['name'] + '\n'
+            if 'username' in committer:
+                username = 'Username: ' + committer['username'] + '\n'
             if 'email' in committer:
                 email = 'Email: ' + committer['email'] + '\n'
 
@@ -47,7 +50,7 @@ def pull(request):
     if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'email' in payload['head_commit']['committer']:
         name = 'Committer: '+payload['head_commit']['committer']['name'] + '\n'
     
-    message = name + email + timestamp +  repositoryFullName + url + '\n'
+    message = name + username + email + timestamp +  repositoryFullName + url + '\n'
     
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
