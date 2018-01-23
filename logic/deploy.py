@@ -28,7 +28,7 @@ def pull(request):
     if 'repository' in payload and 'full_name' in payload['repository']:
         repositoryFullName = 'Repository: ' + payload['repository']['full_name'] + '\n'
         
-    if 'head_commit' in payload:
+    if 'head_commit' in payload and payload['head_commit']:
         
         head_commit = payload['head_commit']
 
