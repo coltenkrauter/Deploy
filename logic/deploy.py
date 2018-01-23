@@ -12,7 +12,7 @@ import subprocess, pendulum
 def pull(request):
     payload = request.get_json()
 
-    username = ''
+    name = ''
     email = ''
     timestamp = ''
     url = ''
@@ -33,8 +33,8 @@ def pull(request):
 
         if 'committer' in head_commit:
             committer = payload['head_commit']['committer']
-            if 'username' in committer:
-                username = 'Committer: ' + committer['username'] + '\n'
+            if 'name' in committer:
+                name = 'Committer: ' + committer['name'] + '\n'
             if 'email' in committer:
                 email = 'Email: ' + committer['email'] + '\n'
 
@@ -45,9 +45,9 @@ def pull(request):
             url = 'Link: <' + head_commit['url'] + '|View Commit>\n'
 
     if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'email' in payload['head_commit']['committer']:
-        username = 'Committer: '+payload['head_commit']['committer']['username'] + '\n'
+        name = 'Committer: '+payload['head_commit']['committer']['name'] + '\n'
     
-    message = username + email + timestamp +  repositoryFullName + url + '\n'
+    message = name + email + timestamp +  repositoryFullName + url + '\n'
     
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
