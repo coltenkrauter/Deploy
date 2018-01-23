@@ -15,6 +15,7 @@ def pull(request):
     username = ''
     email = ''
     timestamp = ''
+    url = ''
 
     if 'repository' not in payload or 'name' not in payload['repository']:
         return {'msg': 'Repository name missing'}
@@ -33,12 +34,15 @@ def pull(request):
         if 'timestamp' in head_commit:
             timestamp = 'Timestamp: ' + pendulum.parse(head_commit['timestamp']).format('%m/%d/%Y %H:%M %p') + '\n'
 
+        if 'url' in head_commit:
+            url = 'Link: <' + head_commit['url'] + '|View Commit>\n'
+
     if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'email' in payload['head_commit']['committer']:
         username = 'Committer: '+payload['head_commit']['committer']['username'] + '\n'
     
     repository = payload['repository']['name']
 
-    info = username + email + timestamp + 'Repository: ' + repository + '\n\n'
+    info = username + email + timestamp + 'Repository: ' + repository + '\n' + url + '\n'
     
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
