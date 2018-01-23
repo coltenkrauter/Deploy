@@ -17,8 +17,8 @@ def pull(request):
     if not payload['repository'] or not payload['repository']['name']:
         return {'msg': 'Repository name missing'}
 
-    if payload['committer'] and payload['committer']['username']:
-        username = 'Committed by '+payload['committer']['username']+'\n'
+    if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'username' in payload['head_commit']['committer']:
+        username = 'Committed by '+payload['head_commit']['committer']['username']+'\n'
     
     repository = payload['repository']['name']
 
