@@ -26,30 +26,31 @@ def pull(request):
         if 'committer' in head_commit:
             committer = payload['head_commit']['committer']
             if 'username' in committer:
-                username = 'Committer: ' + committer['username']+'\n'
+                username = 'Committer: ' + committer['username'] + '\n'
             if 'email' in committer:
-                email = 'Email: ' + committer['email']+'\n'
+                email = 'Email: ' + committer['email'] + '\n'
 
         if 'timestamp' in head_commit:
-            timestamp = 'Timestamp: ' + head_commit['timestamp']
+            timestamp = 'Timestamp: ' + head_commit['timestamp'] + '\n'
 
     if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'email' in payload['head_commit']['committer']:
-        username = 'Committer: '+payload['head_commit']['committer']['username']+'\n'
+        username = 'Committer: '+payload['head_commit']['committer']['username'] + '\n'
     
     repository = payload['repository']['name']
 
-    slack.log(username + email + timestamp + 'Repository: ' + repository)
+    info = username + email + timestamp + 'Repository: ' + repository + '\n\n'
     
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
         try:
             cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../" + repository).decode("utf-8") 
-            slack.log(cmd_output)
+            slack.log(info + cmd_output)
             return {'msg': str(cmd_output)}
 
         except subprocess.CalledProcessError as error:
+            slack.log(info + error.output)
             return {'msg': str(error.output)}
 
     else:
-        slack.log('Nothing to commit')
+        slack.log(info + 'Nothing to commit')
         return {'msg': 'Nothing to commit'}
