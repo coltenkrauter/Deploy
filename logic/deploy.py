@@ -16,9 +16,16 @@ def pull(request):
     email = ''
     timestamp = ''
     url = ''
+    repository = ''
+    repositoryFullName = ''
 
     if 'repository' not in payload or 'name' not in payload['repository']:
         return {'msg': 'Repository name missing'}
+    
+    repository = payload['repository']['name']
+
+    if 'repository' in payload and 'full_name' in payload['repository']:
+        repositoryFullName = 'Repository: ' + payload['repository']['full_name'] + '\n'
 
     if 'head_commit' in payload:
         
@@ -40,21 +47,19 @@ def pull(request):
     if 'head_commit' in payload and 'committer' in payload['head_commit'] and 'email' in payload['head_commit']['committer']:
         username = 'Committer: '+payload['head_commit']['committer']['username'] + '\n'
     
-    repository = payload['repository']['name']
-
-    info = username + email + timestamp + 'Repository: ' + repository + '\n' + url + '\n'
+    message = username + email + timestamp +  repositoryFullName + url + '\n'
     
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
         try:
             cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../" + repository).decode("utf-8") 
-            slack.log(info + cmd_output)
+            slack.log(message + cmd_output)
             return {'msg': str(cmd_output)}
 
         except subprocess.CalledProcessError as error:
-            slack.log(info + error.output)
+            slack.log(message + error.output)
             return {'msg': str(error.output)}
 
     else:
-        slack.log(info + 'Nothing to commit')
+        slack.log(message + 'Nothing to commit')
         return {'msg': 'Nothing to commit'}
