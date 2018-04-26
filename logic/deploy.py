@@ -59,7 +59,7 @@ def pull(request,projectName):
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
         try:
-            cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd=directory["projectName"]).decode("utf-8") 
+            cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd=directory[projectName]).decode("utf-8") 
             slack.log(message + cmd_output)
             return {'msg': str(cmd_output)}
 
