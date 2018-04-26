@@ -22,7 +22,7 @@ def github_payload():
     try:
         signature = request.headers.get('X-Hub-Signature')
 
-        if verify_hmac_hash(request.data, signature):
+        if signature and verify_hmac_hash(request.data, signature):
             if request.headers.get('X-GitHub-Event') == "ping":
                 return jsonify({'msg': 'Ping event successful'})
 
