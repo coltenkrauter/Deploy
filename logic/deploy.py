@@ -9,7 +9,11 @@
 from codepuller.util import slack
 import subprocess, pendulum
 
-def pull(request):
+directory = {
+    "codepuller": "/home4/specica9/public_html/coltenkrauter/dev/codepuller"
+}
+
+def pull(request,projectName):
     payload = request.get_json()
 
     name = ''
@@ -55,7 +59,7 @@ def pull(request):
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
         try:
-            cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd="../" + repository).decode("utf-8") 
+            cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd=directory["projectName"]).decode("utf-8") 
             slack.log(message + cmd_output)
             return {'msg': str(cmd_output)}
 

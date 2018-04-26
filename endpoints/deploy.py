@@ -17,8 +17,8 @@ def verify_hmac_hash(data, signature):
     mac = hmac.new(github_secret.encode('utf-8'), msg=data, digestmod=hashlib.sha1)
     return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)
         
-@app.route("/payload/", methods=['POST'])
-def github_payload():
+@app.route("/pull/<projectName>", methods=['POST'])
+def github_payload(projectName):
     try:
         signature = request.headers.get('X-Hub-Signature')
 
@@ -27,7 +27,7 @@ def github_payload():
                 return jsonify({'msg': 'Ping event successful'})
 
             if request.headers.get('X-GitHub-Event') == "push":
-                return jsonify(logic.pull(request))
+                return jsonify(logic.pull(request,projectName))
 
         else:
             response, status = responder.response(code=401, message='Unable to verify secret key.')
