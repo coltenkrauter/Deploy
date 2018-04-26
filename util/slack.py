@@ -3,7 +3,7 @@
 
 import requests
 import traceback
-from codepuller.config import config
+from codepuller import config
 
 
 def log(message = None):

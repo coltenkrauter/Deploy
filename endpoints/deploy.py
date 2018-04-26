@@ -6,9 +6,8 @@
     Python Version: 3.6
 '''
 
-from codepuller import app, jsonify, request
+from codepuller import app, jsonify, request, config
 from codepuller.util import slack, responder
-from codepuller.config import config
 from codepuller.logic import deploy as logic
 import hmac, hashlib
 
