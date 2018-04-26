@@ -3,7 +3,7 @@
 
 import requests
 import traceback
-from PythonGitHubWebhooks.config import config
+from codepuller.config import config
 
 
 def log(message = None):
