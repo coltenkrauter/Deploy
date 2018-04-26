@@ -6,12 +6,9 @@
     Python Version: 3.6
 '''
 
-from codepuller.util import slack
+from codepuller.util import slack, responder
+from codepuller import config
 import subprocess, pendulum
-
-directory = {
-    "codepuller": "/home4/specica9/public_html/coltenkrauter/dev/codepuller"
-}
 
 def pull(request,projectName):
     payload = request.get_json()
@@ -59,9 +56,12 @@ def pull(request,projectName):
     # Check if there are any commits to pull
     if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
         try:
-            cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'], cwd=directory[projectName]).decode("utf-8") 
-            slack.log(message + cmd_output)
-            return {'msg': str(cmd_output)}
+            if projectName in config.PROJECT:
+                cmd_output = subprocess.check_output(['git','pull','origin',config.PROJECT[projectName]["branch"]], cwd=config.PROJECT[projectName]["directory"]).decode("utf-8") 
+                slack.log(message + cmd_output)
+                return {'msg': str(cmd_output)}
+            else:
+                return responder.response(code=400, message='Project name not found.')
 
         except subprocess.CalledProcessError as error:
             slack.log(message + error.output)
