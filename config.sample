@@ -1,0 +1,4 @@
+# Sample config.py
+
+SLACK_WEBHOOK_LOGGER = "https://hooks.slack.com/services/T6VLDPM36/5LVUJ/asdfghsdfgyhaedrftyI9"
+GITHUB_SECRET = "sdfhgd2345gsdfg1s945eZ/7T9=s=C>wertwer_tTfI:Xf1a3gsdk+8R)vK)"
