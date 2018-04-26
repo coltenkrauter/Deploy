@@ -30,7 +30,7 @@ def github_payload():
                 return jsonify(logic.pull(request))
 
         else:
-            response, status = responder.response(code=401, message='Unable to verify secret key.'+debug)
+            response, status = responder.response(code=401, message='Unable to verify secret key.')
             return jsonify(response), status
 
     except Exception as error:
