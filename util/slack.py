@@ -6,7 +6,6 @@ import requests
 import traceback as error
 
 ENVIRONMENT = "`Colten PC - DEV`\n\n\n\n"
-config.SLACK_WEBHOOK_LOGGER = "https://hooks.slack.com/services/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"
 
 def log(text=None, traceback=True):
     data = {
