@@ -31,7 +31,6 @@ def log(text=None, traceback=True):
     
     # Print to standard out
     print(text)
-    return config.SLACK_WEBHOOK_LOGGER
 
 if __name__ == '__main__':
     log("Testing functionality of Slack logger.", False)

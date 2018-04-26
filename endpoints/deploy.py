@@ -30,7 +30,6 @@ def github_payload():
                 return jsonify(logic.pull(request))
 
         else:
-            debug = slack.log()
             response, status = responder.response(code=401, message='Unable to verify secret key.'+debug)
             return jsonify(response), status
 
