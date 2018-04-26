@@ -64,8 +64,6 @@ def pull(request,projectName):
             return {'msg': str(cmd_output)}
 
         except subprocess.CalledProcessError as error:
-            slack.log(projectName)
-            slack.log(directory[projectName])
             slack.log(message + error.output)
             return {'msg': str(error.output)}
 
