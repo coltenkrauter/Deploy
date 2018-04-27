@@ -53,20 +53,23 @@ def pull(request,projectName):
     
     message = name + username + email + timestamp +  repositoryFullName + url + '\n'
     
-    # Check if there are any commits to pull
-    if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
-        try:
-            if projectName in config.PROJECT:
+    # Check that project config exists
+    if projectName in config.PROJECT:
+
+        # Check if there are any commits to pull
+        if len(payload['commits']) > 0 and payload['commits'][0]['distinct'] == True:
+            try:
                 cmd_output = subprocess.check_output(['git','pull','origin',config.PROJECT[projectName]["branch"]], cwd=config.PROJECT[projectName]["directory"]).decode("utf-8") 
                 slack.log(message + cmd_output)
                 return {'msg': str(cmd_output)}
-            else:
-                return responder.response(code=400, message='Project name not found.')
 
-        except subprocess.CalledProcessError as error:
-            slack.log(message + error.output)
-            return {'msg': str(error.output)}
+            except subprocess.CalledProcessError as error:
+                slack.log(message + error.output)
+                return {'msg': str(error.output)}
 
+        else:
+            return {'msg': 'Nothing to commit'}
     else:
-        slack.log(message + 'Nothing to commit')
-        return {'msg': 'Nothing to commit'}
+        return responder.response(code=400, message='Project not found.')
+
+# Edit responses
