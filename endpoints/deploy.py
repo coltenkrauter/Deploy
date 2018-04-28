@@ -24,8 +24,8 @@ def github_payload(projectName):
 
         if signature and verify_hmac_hash(request.data, signature):
             if request.headers.get('X-GitHub-Event') == "ping":
-                response, status = responder.pack(code=0,description="Ping event successful.")
-                return jsonify(response), status
+                response,status = responder.pack(code=0,description="Ping event successful.")
+                return jsonify(response),status
 
             if request.headers.get('X-GitHub-Event') == "push":
                 response,status = logic.pull(request,projectName)
@@ -38,5 +38,5 @@ def github_payload(projectName):
     except Exception as error:
         slack.log()
         # Internal error
-        response, status = responder.pack(131)
+        response,status = responder.pack(131)
         return jsonify(response),status
