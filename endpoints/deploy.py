@@ -24,16 +24,20 @@ def github_payload(projectName):
 
         if signature and verify_hmac_hash(request.data, signature):
             if request.headers.get('X-GitHub-Event') == "ping":
-                return jsonify({'msg': 'Ping event successful'})
+                response, status = responder.response(code=0,description="Ping event successful.")
+                return jsonify(response), status
 
             if request.headers.get('X-GitHub-Event') == "push":
-                return jsonify(logic.pull(request,projectName))
+                response = logic.pull(request,projectName)
+                response, status = responder.response(code=0,response=response)
+                return jsonify(response), status
 
         else:
-            response, status = responder.response(code=401, message='Unable to verify secret key.')
+            response, status = responder.response(code=32,description="Unable to verify secret key.")
             return jsonify(response), status
 
     except Exception as error:
         slack.log()
-        response, status = responder.response(code=500, message='Internal error.')
+        # Internal error
+        response, status = responder.response(131)
         return jsonify(response), status

@@ -70,6 +70,6 @@ def pull(request,projectName):
         else:
             return {'msg': 'Nothing to commit'}
     else:
-        return responder.response(code=400, message='Project not found.')
+        return responder.response(code=34, description="Project not found.")
 
-# Edit responses
+# Edit responses to use responder
