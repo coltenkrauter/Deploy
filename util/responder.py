@@ -43,7 +43,7 @@ error = {
 }
 
 # Pack response objects based on code
-def pack(code, description=None, response=None):
+def pack(code,description=None,response=None):
     payload = {
         "code": code
     }
@@ -57,9 +57,9 @@ def pack(code, description=None, response=None):
         if response:
             payload["data"] = response
         
-        return payload, error[code]["HTTPStatusCode"]
+        return payload,error[code]["HTTPStatusCode"]
     
     payload["message"] = "Undefined error code!"
 
     # return 500 (Internal server error) for undefined error codes
-    return payload, 500
+    return payload,500

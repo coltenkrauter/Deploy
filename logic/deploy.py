@@ -6,9 +6,9 @@
     Python Version: 3.6
 """
 
-from codepuller.util import slack, responder
+from codepuller.util import slack,responder
 from codepuller import config
-import subprocess, pendulum
+import subprocess,pendulum
 
 def pull(request,projectName):
     payload = request.get_json()
@@ -61,8 +61,8 @@ def pull(request,projectName):
                 slack.log(message+error.output)
                 return responder.pack(code=131,description=str(error.output))
         else:
-            return responder.pack(code=34,description="Nothing to commit.")
+            return responder.pack(code=34,description="Nothing to commit")
     else:
-        return responder.pack(code=34,description="Project not found.")
+        return responder.pack(code=34,description="Project not found")
 
 # Edit responses to use responder
