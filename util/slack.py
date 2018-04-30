@@ -4,6 +4,7 @@
 from codepuller import config
 import requests
 import traceback
+import time
 
 ENVIRONMENT = "COLTEN LAPTOP - DEV"
 color = {
@@ -21,7 +22,7 @@ def log(text=None,name=None,link=None,alias=None,priority="information"):
                 "color": color[priority],
                 "fields": [],
                 "thumb_url": "https://raw.githubusercontent.com/coltenkrauter/emojione/2.2.7/assets/png_512x512/1f98d.png",
-                "ts": 
+                "ts": time.now()
             }
         ]
     }
