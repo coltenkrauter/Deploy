@@ -58,7 +58,7 @@ def pull(request,projectName):
                 return responder.pack(code=0,description=str(cmd_output))
 
             except subprocess.CalledProcessError as error:
-                slack.log(message+error.output)
+                slack.log(message+str(error.output))
                 return responder.pack(code=131,description=str(error.output))
         else:
             return responder.pack(code=34,description="Nothing to commit")
