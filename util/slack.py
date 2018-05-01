@@ -56,7 +56,7 @@ def log(text=None,name=None,avatar=None,timestamp=None,repo=None,repoUrl=None,co
 
     # If there is a timestamp, add timestamp
     if timestamp:
-        slack["attachments"][0]["ts"] = pendulum.parse(timestamp).seconds
+        slack["attachments"][0]["ts"] = pendulum.parse(timestamp).timestamp()
 
     # If there is a repoUrl, add it to the slack message attachment as the footer
     if repo and repoUrl:
