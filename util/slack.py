@@ -4,7 +4,6 @@
 from codepuller import config
 import requests
 import traceback
-import time
 import pendulum
 
 ENVIRONMENT = "COLTEN LAPTOP - DEV"
@@ -25,7 +24,7 @@ def log(text=None,name=None,avatar=None,timestamp=None,repo=None,repoUrl=None,co
                 "color": color[priority],
                 "fields": [],
                 "thumb_url": "https://raw.githubusercontent.com/coltenkrauter/emojione/2.2.7/assets/png_512x512/1f98d.png",
-                "ts": time.time()
+                "ts": pendulum.now().timestamp()
             }
         ]
     }
