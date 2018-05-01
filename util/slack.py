@@ -24,7 +24,7 @@ def log(text=None,name=None,avatar=None,timestamp=None,repo=None,repoUrl=None,co
                 "color": color[priority],
                 "fields": [],
                 "thumb_url": "https://raw.githubusercontent.com/coltenkrauter/emojione/2.2.7/assets/png_512x512/1f98d.png",
-                "ts": time.time()
+                "ts": time.time()*1000
             }
         ]
     }
@@ -55,7 +55,7 @@ def log(text=None,name=None,avatar=None,timestamp=None,repo=None,repoUrl=None,co
 
     # If there is a timestamp, add timestamp
     if timestamp:
-        slack["attachments"][0]["ts"] = pendulum.parse(timestamp).in_seconds()
+        slack["attachments"][0]["ts"] = pendulum.parse(timestamp).in_seconds()*1000
 
     # If there is a repoUrl, add it to the slack message attachment as the footer
     if repo and repoUrl:
