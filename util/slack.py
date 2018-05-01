@@ -24,7 +24,7 @@ def log(text=None,name=None,avatar=None,timestamp=None,repo=None,repoUrl=None,co
                 "color": color[priority],
                 "fields": [],
                 "thumb_url": "https://raw.githubusercontent.com/coltenkrauter/emojione/2.2.7/assets/png_512x512/1f98d.png",
-                "ts": time.time()
+                "ts": time.time()*1000
             }
         ]
     }
@@ -34,11 +34,12 @@ def log(text=None,name=None,avatar=None,timestamp=None,repo=None,repoUrl=None,co
         slack["attachments"][0]["text"] = str(text)
 
     # If there is a traceback, add it to the slack message attachment
-    if str(traceback.format_exc()) is not "NoneType: None":
+    tb = str(traceback.format_exc())
+    if not ("NoneType:" in tb and len(tb) < 50):
         slack["attachments"][0]["fields"].append(
             {
                 "title": "Traceback",
-                "value": str(traceback.format_exc())
+                "value": tb
             }
         )
 
