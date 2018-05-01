@@ -7,13 +7,15 @@ import traceback
 import time
 
 ENVIRONMENT = "COLTEN LAPTOP - DEV"
+
 color = {
-    "information": "",
-    "warning": "",
-    "error": ""
+    "success": "#689F38",
+    "information": "#1565C0",
+    "warning": "#FFCE31",
+    "error": "#cd201f"
 }
 
-def log(text=None,name=None,link=None,alias=None,priority="information"):
+def log(text=None,name=None,avatar=None,timestamp=None,repo=None,repoUrl=None,commit=None,commitUrl=None,priority="information"):
     slack = {
         "attachments": [
             {   
@@ -43,18 +45,30 @@ def log(text=None,name=None,link=None,alias=None,priority="information"):
     # If there is a name, add it to the slack message attachment as the footer
     if name:
         slack["attachments"][0]["footer"] = name
-        slack["attachments"][0]["footer_icon"] = "https://raw.githubusercontent.com/coltenkrauter/emojione/2.2.7/assets/png_128x128/1f464.png"
 
-    # If there is a link, add it to the slack message attachment as the footer
-    if alias and link:
-        slack["attachments"][0]["title"] = alias
-        slack["attachments"][0]["title_link"] = link
+        # Add avatar 
+        if avatar:
+            slack["attachments"][0]["footer_icon"] = avatar
+        else:
+            slack["attachments"][0]["footer_icon"] = "https://raw.githubusercontent.com/coltenkrauter/emojione/2.2.7/assets/png_128x128/1f464.png"
 
+    # If there is a timestamp, add timestamp
+    if timestamp:
+        slack["attachments"][0]["ts"] = timestamp
+
+    # If there is a repoUrl, add it to the slack message attachment as the footer
+    if repo and repoUrl:
+        slack["attachments"][0]["title"] = repo
+        slack["attachments"][0]["title_link"] = repoUrl
+
+    # If there is a commit link, add it to the slack message attachment
+    if commit and commitUrl:
+        slack["attachments"][0]["author_name"] = commit
+        slack["attachments"][0]["author_link"] = commitUrl
+        slack["attachments"][0]["author_icon"] = "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"
+    
     # Post to Slack
     r = requests.post(config.SLACK_WEBHOOK_LOGGER,json=slack)
     
     # Print to standard out
-    print(text)
-
-if __name__ == '__main__':
-    log("Testing functionality of Slack logger",False)
+    print(str(slack))
