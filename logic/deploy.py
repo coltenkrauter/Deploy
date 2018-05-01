@@ -30,7 +30,7 @@ def pull(request,projectName):
             repoUrl = "https://github.com/"+repo
 
         if "owner" in repository:
-            if "avatar_url" in payload["owner"]:
+            if "avatar_url" in repository["owner"]:
                 avatar = repository["owner"]["avatar_url"]
         
     if "head_commit" in payload and payload["head_commit"]:
