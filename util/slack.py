@@ -1,6 +1,3 @@
-# Thanks tomdaley92 for the simple slack logging solution with traceback
-# Credit: https://github.com/tomdaley92
-
 from codepuller import config
 import requests
 import traceback
